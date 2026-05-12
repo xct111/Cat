@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // 跳跃控制（示例：空格键跳跃，可根据需求调整）
-        if (Input.GetKeyDown(KeyCode.Space) && !anim.GetBool("isJumping"))
+        if (Input.GetKeyDown(KeyCode.W) && !anim.GetBool("isJumping"))
         {
             jumpAudio.Play();
             anim.SetBool("isJumping", true);
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
+        if (Input.GetKeyDown(KeyCode.S) && !isDashing)
         {
             TriggerDash();
         }
@@ -140,8 +140,18 @@ public class PlayerController : MonoBehaviour
         // 到达终点
         if (other.gameObject.CompareTag("FinishLine"))
         {
-            GameManager.Instance.GameWin();
-            victoryAudio.Play();
+            if (GameManager.Instance.goldCount >= GameManager.Instance.winCount)
+            {
+             victoryAudio.Play();   
+            }
+            else
+            {
+                damageAudio.Play();
+            }
+            GameManager.Instance.CheckWin();
+            //victoryAudio.Play();
+            
+
             anim.SetBool("isRunning", false);
         }
 

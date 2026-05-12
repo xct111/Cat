@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     public GameObject failPanel;// 失败面板
     public GameObject winPanel; // 胜利面板
 
-    private int goldCount = 0;  // 金币数量
+    public int goldCount = 0;  // 金币数量
+
+    public int winCount;
     public bool isGameOver = false; // 游戏是否结束
 
     private void Awake()
@@ -23,7 +25,16 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
         goldCount++;
-        goldText.text = "Obtain Quantity：" + goldCount;
+        if (goldCount >= winCount)
+        {
+            goldCount =winCount;
+        }
+        /*if (goldCount == winCount)
+        {
+            GameWin();
+        }*/
+
+        goldText.text = "Obtain Quantity：" + goldCount +"/" + winCount;
     }
 
     // 游戏失败
@@ -38,5 +49,17 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         winPanel.SetActive(true);
+    }
+
+    public void CheckWin()
+    {
+        if (goldCount >= winCount)
+        {
+            GameWin();
+        }
+        else
+        {
+            GameFail();
+        }
     }
 }
